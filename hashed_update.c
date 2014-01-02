@@ -36,13 +36,14 @@ int main(int argc, char* argv[]) {
     buf2md5("hello", strlen("hello"), digest);
     printf("%02x\n", digest[0]);
     
-    const char* in_filename;
-    const char* out_filename;
-    const char* in_hashfilename;
-    const char* out_hashfilename;
+    const char* in_filename=NULL;
+    const char* out_filename=NULL;
+    const char* in_hashfilename=NULL;
+    const char* out_hashfilename=NULL;
     int blocksize=0;
     
     if(argc!=1+5) {
+        printf("hashed_update: Copies changed blocks from source to destination, according to md5 hashes stored separately.\n");
         printf("Usage: hashed_update input input_hashes output output_hashes blocksize\n");
         printf("       Use NULL instead of arguments for various modes\n");
         printf("  Create hashes: hashed_update smth NULL NULL   smth.hashes   262144\n");
@@ -52,12 +53,16 @@ int main(int argc, char* argv[]) {
         printf("  Hashed update plus save new hashfile: hashed_update smth smth.hashes outfile outfile.hashes 262144\n");
         return 1;
     }
-    
-    in_filename = argv[1];
-    in_hashfilename = argv[2];
-    out_filename = argv[3];
-    out_hashfilename = argv[4];
+#define NULLIZE(x) if(!strcmp(x,"NULL"))x=NULL;
+    in_filename = argv[1];      NULLIZE(in_filename);
+    in_hashfilename = argv[2];  NULLIZE(in_hashfilename);
+    out_filename = argv[3];     NULLIZE(out_filename);
+    out_hashfilename = argv[4]; NULLIZE(out_hashfilename);
+#undef NULLIZE
     assert(sscanf(argv[5], "%d", &blocksize)==1);
+    assert(blocksize>0 && blocksize<0x80000000);
+    
+    fprintf(stderr, "Parameters: %s %s %s %s %d\n", in_filename, in_hashfilename, out_filename, out_hashfilename, blocksize);
     
     return 0;
 }
