@@ -42,11 +42,11 @@ int main(int argc, char* argv[]) {
         printf("Usage: hashed_update input input_hashes output output_hashes blocksize\n");
         printf("       Use NULL instead of arguments for various modes\n");
         printf("       Output file must exist and be seekable\n");
-        printf("  Create hashes:   hashed_update smth NULL NULL   smth.hashes   262144\n");
-        printf("  Measure changes: hashed_update smth smth.hashes NULL NULL     262144\n");
-        printf("  Just copy:       hashed_update smth NULL        outfile NULL  262144\n");
-        printf("  Hashed update:   hashed_update smth smth.hashes outfile NULL  262144\n");
-        printf("  Hashed update plus save new hashfile: hashed_update smth smth.hashes outfile outfile.hashes 262144\n");
+        printf("  Create hashes:   hashed_update smth NULL NULL   smth.hashes   65536\n");
+        printf("  Measure changes: hashed_update smth smth.hashes NULL NULL     65536\n");
+        printf("  Just copy:       hashed_update smth NULL        outfile NULL  65536\n");
+        printf("  Hashed update:   hashed_update smth smth.hashes outfile NULL  65536\n");
+        printf("  Hashed update plus save new hashfile: hashed_update smth smth.hashes outfile outfile.hashes 65536\n");
         return 1;
     }
 #define NULLIZE(x) if(!strcmp(x,"NULL"))x=NULL;
